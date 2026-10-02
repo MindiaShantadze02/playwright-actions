@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:smoke:chromium": "playwright test --grep @smoke --project=chromium",
+    "test:regression:chromium": "playwright test --grep @regression --project=chromium",
+    "test:api": "playwright test --project=api",
+    "test:e2e": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:headed": "playwright test --project=chromium --headed",
+    "report": "playwright show-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

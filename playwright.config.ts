@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { env } from './env';
+import { STORAGE_STATE } from './fixtures/storageState';
 
 export default defineConfig({
   testDir: './tests',
@@ -10,24 +11,47 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: env.baseURL,
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
+    video: 'on'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testDir: './fixtures',
+      testMatch: /.*\.setup\.ts/,
+      teardown: 'teardown',
+    },
+    {
+      name: 'teardown',
+      testDir: './fixtures',
+      testMatch: /.*\.teardown\.ts/,
+    },
+    {
+      name: 'api',
+      testDir: './tests/api',
+      use: { baseURL: 'https://dummyjson.com' },
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      testIgnore: /api\//,
+      dependencies: ['setup'],
+      use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      testIgnore: /api\//,
+      dependencies: ['setup'],
+      use: { ...devices['Desktop Firefox'], storageState: STORAGE_STATE },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      testIgnore: /api\//,
+      dependencies: ['setup'],
+      use: { ...devices['Desktop Safari'], storageState: STORAGE_STATE },
     }
   ]
 });
