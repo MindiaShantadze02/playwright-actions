@@ -125,6 +125,8 @@ All 466 flashcards are mapped to 13 phases. Card numbers = row order in the deck
 
 **Done when:** a PR triggers sharded runs and produces one merged HTML report.
 
+Step-by-step practice tasks for this phase: [CI_CD_TASKS.md](CI_CD_TASKS.md)
+
 ## Not covered well by saucedemo
 
 API testing (`request` fixture) and `webServer` — no backend/API to hit. The deck barely covers them, but for interviews consider a quick side exercise against a public API (e.g. restful-booker).
