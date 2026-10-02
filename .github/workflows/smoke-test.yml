@@ -26,3 +26,14 @@ jobs:
         with:
           name: playwright-test-result
           path: playwright-report
+  output_test:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get artifacts from previous job
+        uses: actions/download-artifact@v3
+        with:
+          name: playwright-test-result
+        run: ls
+      - name: Download artifact
+        run: echo "Deploying..."
