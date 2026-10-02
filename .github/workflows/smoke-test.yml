@@ -34,6 +34,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: playwright-test-result
-        run: ls
+      - run: ls
       - name: Download artifact
         run: echo "Deploying..."
