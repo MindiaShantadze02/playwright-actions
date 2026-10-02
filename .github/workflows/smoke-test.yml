@@ -21,7 +21,7 @@ jobs:
           BASE_URL: ${{ vars.BASE_URL }}
           STANDARD_USER: ${{ secrets.STANDARD_USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: npx playwright test --grep "@smoke" --project=chromium --project=api
+        run: npx playwright test --grep "@smoke" --project=chromium --project=api --trace on
       - uses: actions/upload-artifact@v4
         with:
           name: playwright-test-result
