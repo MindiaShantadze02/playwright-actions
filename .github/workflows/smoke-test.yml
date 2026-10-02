@@ -2,28 +2,31 @@ name: Smoke Test
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 jobs:
   test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
-    env:
-      BASE_URL: ${{ secrets.BASE_URL }}
-      STANDARD_USER: ${{ secrets.STANDARD_USER }}
-      PASSWORD: ${{ secrets.PASSWORD }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          cache: npm
+          node-version: 22
       - name: Install Dependencies
         run: npm ci
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright Tests
-        run: npx playwright test --grep "@smoke"
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          STANDARD_USER: ${{ secrets.STANDARD_USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npx playwright test --grep "@smoke" --project=chromium --project=api
       - uses: actions/upload-artifact@v4
         if: ${{!cancelled()}}
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 7
       

@@ -29,9 +29,10 @@ test.describe('DummyJSON auth API', () => {
         expect((await response.json()).message).toBe('Invalid credentials');
     });
 
-    test('/auth/me without a token is unauthorized', { tag: ['@api', '@regression'] }, async ({ request }) => {
+    test('/auth/me without a token is unauthorized', { tag: ['@api', '@smoke'] }, async ({ request }) => {
         const response = await request.get('/auth/me');
-
-        expect(response.status()).toBe(401);
+        
+        // deliberately failing this test to check the artifacts in CI
+        expect(response.status()).toBe(200);
     });
 });
