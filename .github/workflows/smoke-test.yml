@@ -6,6 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          STANDARD_USER: ${{ secrets.STANDARD_USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
@@ -15,7 +19,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright Tests
-        run: npx playwright test --grep "@smoke"
+        run: BASE_URL=${{ $env:BASE_URL }} STANDARD_USER=${{ $env:STANDARD_USER }} PASSWORD=${{ $env:PASSWORD }} npx playwright test --grep "@smoke"
       - uses: actions/upload-artifact@v4
         if: ${{!cancelled()}}
         with:
