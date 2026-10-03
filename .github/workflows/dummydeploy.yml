@@ -1,11 +1,12 @@
 name: Dummy Deploy
 on:
   workflow_call:
+    inputs:
+      number: 
+        description: The number which will be logged
+        required: true
+        type: number
+      
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        number: [1,2,3,4]
-    steps:
-      - run: echo ${{ matrix.number }}
+    run: echo ${{ inputs.number }}

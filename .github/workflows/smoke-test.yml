@@ -47,3 +47,5 @@ jobs:
   dummy_deploy:
     needs: test
     uses: ./.github/workflows/dummydeploy.yml
+    with:
+      number: 5
