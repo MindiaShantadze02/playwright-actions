@@ -9,4 +9,4 @@ on:
       
 jobs:
   deploy:
-    run: echo ${{ inputs.number }}
+    - run: echo ${{ inputs.number }}
