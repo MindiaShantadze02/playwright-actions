@@ -16,9 +16,8 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npn-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
@@ -30,13 +29,12 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
         run: npx playwright test --grep "@smoke" --project=chromium --project=api
       - uses: actions/upload-artifact@v7
-        if: ${{ failure() && steps.playwright-test.outcome == 'failure' }}
+        if: ${{ !cancelled() }}
         with:
           name: playwright-test-result
           path: playwright-report
   output_test:
     needs: test
-    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Get artifacts from previous job
@@ -47,5 +45,5 @@ jobs:
       - name: Deploying
         run: echo "Deploying..."
   dummy_deploy:
-    - name: Dummy Deploy job
-      uses: .github.workflows/dummydeploy.yml
+    needs: test
+    uses: ./.github/workflows/dummydeploy.yml
