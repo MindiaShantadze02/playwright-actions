@@ -6,7 +6,9 @@ on:
         description: The number which will be logged
         required: true
         type: number
-      
 jobs:
   deploy:
-    - run: echo ${{ inputs.number }}
+      runs-on: ubuntu-latest  
+      steps:
+        - run: echo ${{ inputs.number }} 
+        
