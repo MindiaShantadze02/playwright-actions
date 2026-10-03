@@ -88,5 +88,5 @@ Mark items `[x]` as they're done, and add notes under **Progress notes** at the 
 
 ## Backlog / nitpicks
 
-- [ ] Bump `actions/upload-artifact@v4` to the same major version as `checkout` / `setup-node`
-- [ ] Remove trailing whitespace at the end of `smoke-test.yml`
+- [x] Bump `actions/upload-artifact@v4` to the same major version as `checkout` / `setup-node`
+- [x] Remove trailing whitespace at the end of `smoke-test.yml`
